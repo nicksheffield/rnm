@@ -7,6 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "author": "Nick Sheffield <numbereft@gmail.com>",
   "bin": {
     "rnm": "index.js"
   },
@@ -16,5 +17,13 @@
     "chalk": "^1.1.0",
     "commander": "^2.8.1",
     "lodash": "^3.10.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nicksheffield/rnm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nicksheffield/rnm/issues"
+  },
+  "homepage": "https://github.com/nicksheffield/rnm#readme"
 }
