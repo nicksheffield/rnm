@@ -5,7 +5,7 @@ var fs = require('fs');
 var _ = require('lodash');
 
 program
-	.version('1.0.0')
+	.version('0.0.1')
 	.usage('[options] <search> <replace>')
 	.option('-x --regexp', 'search term is a regular expression')
 	.parse(process.argv);
