@@ -1,0 +1,19 @@
+{
+  "name": "rnm",
+  "version": "1.0.0",
+  "description": "Rename multiple files in a directory",
+  "main": "index.js",
+  "preferGlobal": "true",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "rnm": "index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^2.8.1",
+    "lodash": "^3.10.0"
+  }
+}
