@@ -21,3 +21,11 @@ Usage: rnm [options] <search> <replace>
     -x --regexp    search term is a regular expression
     
 ```
+
+---
+
+todo: 
+	
+ * Add mocha tests
+ * publish to npm
+ * add recursive option

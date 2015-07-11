@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 
-var program = require('commander');
 var fs = require('fs');
+
+var program = require('commander');
 var _ = require('lodash');
+var chalk = require('chalk');
 
 program
 	.version('0.0.1')
@@ -33,7 +35,7 @@ if (!program.args.length) {
 
 			fs.rename(workingDir + '/' + nameBefore, workingDir + '/' + nameAfter, function() {
 				if (nameBefore !== nameAfter) {
-					console.log(nameBefore, '->', nameAfter);
+					console.log(nameBefore.replace(search, chalk.red.bold(search)), '->', nameAfter.replace(replace, chalk.green.bold(replace)));
 				}
 			});
 
