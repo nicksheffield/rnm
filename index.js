@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 
+process.stdin.resume();
+process.stdin.setEncoding('utf8');
+
 var fs = require('fs');
+var util = require('util');
 
 var program = require('commander');
 var _ = require('lodash');
@@ -13,6 +17,7 @@ program
 	.parse(process.argv);
 
 var workingDir = process.cwd();
+var matchedFiles = [];
 
 if (!program.args.length) {
 	program.help();
@@ -26,19 +31,59 @@ if (!program.args.length) {
 
 	fs.readdir(workingDir, function(err, files) {
 		files.sort();
+		
+		if(!files.length){
+			console.log('No matches found the term: "' + search + '"');
+			process.exit();
+		}
 
 		_.each(files, function(file) {
 			if (file == '.DS_Store') return;
-
-			var nameBefore = file;
-			var nameAfter = file.replace(search, replace);
-
-			fs.rename(workingDir + '/' + nameBefore, workingDir + '/' + nameAfter, function() {
-				if (nameBefore !== nameAfter) {
-					console.log(nameBefore.replace(search, chalk.red.bold(search)), '->', nameAfter.replace(replace, chalk.green.bold(replace)));
-				}
-			});
+			
+			var newFile = {
+				before: file,
+				after: file.replace(search, replace)
+			};
+			
+			if (newFile.before === newFile.after) {
+				return;
+			}
+			
+			matchedFiles.push(newFile);
+			
+			console.log(
+				newFile.before.replace(search, chalk.red.bold(search)),
+				'->',
+				newFile.after.replace(replace, chalk.green.bold(replace))
+			);
 
 		});
+		
+		console.log('Are you sure you want to rename these files? (Y/n)');
 	});
 }
+
+process.stdin.on('data', function (text) {
+	// console.log('text is', util.inspect(text));
+	var finished = 0;
+	var total = matchedFiles.length;
+
+	if (text === 'Y\n') {
+		_.each(matchedFiles, function(file){
+			fs.rename(workingDir + '/' + file.before, workingDir + '/' + file.after, function(){
+				finished++;
+				if(finished == total){
+					process.exit();
+				}
+			});
+		});
+	} else {
+		console.log('Cancelled');
+		process.exit();
+	}
+});
+
+
+process.on('uncaughtException', function(err) {
+	console.log(err);
+});
