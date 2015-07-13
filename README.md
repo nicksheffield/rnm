@@ -3,7 +3,7 @@
 Rename multiple files in a directory
 
 ```
-npm install -g rnm
+npm install -g
 ```
 
 ---

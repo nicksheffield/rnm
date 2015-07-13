@@ -26,7 +26,7 @@ if (!program.args.length) {
 	var replace = program.args.length >= 2 ? program.args[1] : '';
 
 	if (program.regexp) {
-		search = new Regexp(search);
+		search = new RegExp(search);
 	}
 
 	fs.readdir(workingDir, function(err, files) {
@@ -50,6 +50,14 @@ if (!program.args.length) {
 			}
 			
 			matchedFiles.push(newFile);
+			
+			var logBefore;
+			
+			if(program.regexp) {
+				logBefore = newFile.before.replace(newFile.before.match(search)[0], chalk.red.bold(newFile.before.match(search)[0]));
+			} else {
+				logBefore = newFile.before.replace(search, chalk.red.bold(search));
+			}
 			
 			console.log(
 				newFile.before.replace(search, chalk.red.bold(search)),
